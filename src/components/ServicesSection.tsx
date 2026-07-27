@@ -31,7 +31,7 @@ const services: Service[] = [
 
 export default function ServicesSection() {
   return (
-    <section id="servicios" className="scroll-mt-24 px-6 py-24 sm:px-12">
+    <section id="servicios" className="scroll-mt-24 px-4 py-16 sm:px-8 sm:py-20 md:px-12 md:py-24">
       <div className="mx-auto max-w-5xl">
         <SectionHeading
           index="04"

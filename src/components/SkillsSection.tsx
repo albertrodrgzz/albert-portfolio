@@ -99,7 +99,7 @@ function handleSkillMouseMove(event: MouseEvent<HTMLDivElement>) {
 
 export default function SkillsSection() {
   return (
-    <section id="skills" className="scroll-mt-24 px-6 py-24 sm:px-12">
+    <section id="skills" className="scroll-mt-24 px-4 py-16 sm:px-8 sm:py-20 md:px-12 md:py-24">
       <div className="mx-auto max-w-5xl">
         <SectionHeading
           index="02"
@@ -111,7 +111,7 @@ export default function SkillsSection() {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.15 }}
+          viewport={{ once: true, margin: "-50px" }}
           className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-2"
         >
           {modules.map((mod) => {
@@ -165,7 +165,7 @@ export default function SkillsSection() {
                           <motion.div
                             initial={{ width: 0 }}
                             whileInView={{ width: `${skill.level}%` }}
-                            viewport={{ once: true }}
+                            viewport={{ once: true, margin: "-50px" }}
                             transition={{ duration: 0.8, ease: "easeOut" }}
                             className="h-full rounded-full bg-emerald-400"
                           />

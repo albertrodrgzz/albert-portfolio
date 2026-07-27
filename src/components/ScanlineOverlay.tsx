@@ -2,7 +2,7 @@ export default function ScanlineOverlay() {
   return (
     <div
       aria-hidden="true"
-      className="pointer-events-none fixed inset-0 z-50 mix-blend-overlay"
+      className="pointer-events-none fixed inset-0 z-50 hidden mix-blend-overlay md:block"
     >
       <div
         className="absolute inset-0"

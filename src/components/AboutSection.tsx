@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { motion, type Variants } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
@@ -45,13 +46,15 @@ const item: Variants = {
 };
 
 export default function AboutSection() {
+  const [isRevealed, setIsRevealed] = useState(false);
+
   return (
-    <section id="sobre-mi" className="scroll-mt-24 px-6 py-24 sm:px-12">
+    <section id="sobre-mi" className="scroll-mt-24 px-4 py-16 sm:px-8 sm:py-20 md:px-12 md:py-24">
       <motion.div
         variants={container}
         initial="hidden"
         whileInView="show"
-        viewport={{ once: true, amount: 0.2 }}
+        viewport={{ once: true, margin: "-50px" }}
         className="mx-auto max-w-5xl"
       >
         <motion.div variants={item}>
@@ -77,13 +80,25 @@ export default function AboutSection() {
               aria-hidden="true"
               className="absolute inset-0 animate-pulse rounded-full bg-emerald-500/20 blur-3xl"
             />
-            <Image
-              alt="Albert Rodríguez"
-              src="/1001612983.png"
-              width={400}
-              height={400}
-              className="relative h-56 w-56 rounded-full border border-neutral-800 object-cover grayscale contrast-125 brightness-90 transition-all duration-700 hover:grayscale-0 hover:brightness-110 sm:h-72 sm:w-72"
-            />
+            <button
+              type="button"
+              onClick={() => setIsRevealed((prev) => !prev)}
+              aria-pressed={isRevealed}
+              aria-label="Alternar color de la foto de perfil"
+              className="relative block rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
+            >
+              <Image
+                alt="Albert Rodríguez"
+                src="/1001612983.png"
+                width={400}
+                height={400}
+                priority
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className={`h-56 w-56 rounded-full border border-neutral-800 object-cover contrast-125 brightness-90 transition-all duration-700 hover:grayscale-0 hover:brightness-110 sm:h-72 sm:w-72 ${
+                  isRevealed ? "grayscale-0 brightness-110" : "grayscale"
+                }`}
+              />
+            </button>
           </motion.div>
 
           <div className="w-full flex-1">

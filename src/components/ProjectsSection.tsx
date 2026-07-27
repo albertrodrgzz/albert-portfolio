@@ -67,7 +67,7 @@ const item: Variants = {
 
 export default function ProjectsSection() {
   return (
-    <section id="proyectos" className="scroll-mt-24 px-6 py-24 sm:px-12">
+    <section id="proyectos" className="scroll-mt-24 px-4 py-16 sm:px-8 sm:py-20 md:px-12 md:py-24">
       <div className="mx-auto max-w-5xl">
         <SectionHeading index="03" command="ls ./proyectos" title="Proyectos" />
 
@@ -75,7 +75,7 @@ export default function ProjectsSection() {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, amount: 0.2 }}
+          viewport={{ once: true, margin: "-50px" }}
           className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2"
         >
           {projects.map((project) => {

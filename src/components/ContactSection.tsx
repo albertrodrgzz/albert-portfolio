@@ -1,14 +1,15 @@
 "use client";
 
-import type { FormEvent } from "react";
-import { Mail, MessageCircle } from "lucide-react";
+import { useState } from "react";
+import { Check, Copy, Mail, MessageCircle } from "lucide-react";
+import { motion, type Variants } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
-import MagneticButton from "@/components/MagneticButton";
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
 const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
 
-const WHATSAPP_MESSAGE = "Hola Albert, vi tu portafolio y me gustaría contactarte.";
+const WHATSAPP_MESSAGE =
+  "Hola Albert, vi tu portafolio y me gustaría contactarte.";
 const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
   WHATSAPP_MESSAGE
 )}`;
@@ -16,102 +17,101 @@ const MAIL_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
   "Contacto desde el portafolio"
 )}`;
 
+const cardClass =
+  "group relative flex flex-col items-center gap-3 overflow-hidden rounded-lg border border-neutral-800 bg-white/5 p-8 text-center backdrop-blur-xl transition-all duration-300 hover:border-emerald-500/50 hover:bg-white/[0.08] hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]";
+
+const container: Variants = {
+  hidden: {},
+  show: {
+    transition: { staggerChildren: 0.12, delayChildren: 0.1 },
+  },
+};
+
+const item: Variants = {
+  hidden: { opacity: 0, y: 24 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } },
+};
+
 export default function ContactSection() {
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
-    console.log("POST /api/contacto", Object.fromEntries(formData.entries()));
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopyEmail() {
+    try {
+      await navigator.clipboard.writeText(CONTACT_EMAIL);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      setCopied(false);
+    }
   }
 
   return (
-    <section id="contacto" className="scroll-mt-24 px-6 py-24 sm:px-12">
-      <div className="mx-auto max-w-2xl">
+    <section id="contacto" className="scroll-mt-24 px-4 py-16 sm:px-8 sm:py-20 md:px-12 md:py-24">
+      <div className="mx-auto max-w-4xl">
         <SectionHeading
           index="05"
-          command="./contacto --nuevo-registro"
+          command="./contacto --centro-de-enlaces"
           title="Contacto"
         />
 
-        <div className="flex flex-col gap-3 sm:flex-row">
-          <MagneticButton
-            href={WHATSAPP_HREF}
-            variant="primary"
-            target="_blank"
-            className="w-full justify-center sm:w-auto"
-          >
-            <MessageCircle className="h-4 w-4" />
-            WhatsApp
-          </MagneticButton>
-
-          <MagneticButton
-            href={MAIL_HREF}
-            variant="secondary"
-            className="w-full justify-center sm:w-auto"
-          >
-            <Mail className="h-4 w-4" />
-            {CONTACT_EMAIL}
-          </MagneticButton>
-        </div>
-
-        <div className="my-8 flex items-center gap-4">
-          <div className="h-px flex-1 bg-neutral-800/50" />
-          <span className="text-xs text-neutral-600">o completa el formulario</span>
-          <div className="h-px flex-1 bg-neutral-800/50" />
-        </div>
-
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-5 rounded-lg border border-neutral-800 bg-neutral-900/40 p-6 sm:p-8"
+        <motion.div
+          variants={container}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 gap-4 sm:grid-cols-3"
         >
-          <div className="flex flex-col gap-2">
-            <label htmlFor="nombre" className="text-sm text-neutral-400">
-              <span className="text-emerald-400">&gt;</span> nombre:
-            </label>
-            <input
-              id="nombre"
-              name="nombre"
-              type="text"
-              required
-              placeholder="Ada Lovelace"
-              className="rounded border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 outline-none placeholder:text-neutral-600 focus:border-emerald-400"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="email" className="text-sm text-neutral-400">
-              <span className="text-emerald-400">&gt;</span> email:
-            </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              required
-              placeholder="tu@email.com"
-              className="rounded border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 outline-none placeholder:text-neutral-600 focus:border-emerald-400"
-            />
-          </div>
-
-          <div className="flex flex-col gap-2">
-            <label htmlFor="mensaje" className="text-sm text-neutral-400">
-              <span className="text-emerald-400">&gt;</span> mensaje:
-            </label>
-            <textarea
-              id="mensaje"
-              name="mensaje"
-              required
-              rows={5}
-              placeholder="Cuéntame en qué estás trabajando..."
-              className="resize-none rounded border border-neutral-800 bg-neutral-950 px-3 py-2 text-sm text-neutral-100 outline-none placeholder:text-neutral-600 focus:border-emerald-400"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="mt-2 inline-flex items-center justify-center rounded border border-emerald-400/30 bg-emerald-400/10 px-4 py-2.5 text-sm font-semibold text-emerald-400 transition-colors hover:bg-emerald-400/20"
+          <motion.a
+            variants={item}
+            href={WHATSAPP_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
+            className={cardClass}
           >
-            POST /api/contacto
-          </button>
-        </form>
+            <span className="flex h-14 w-14 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 transition-colors duration-300 group-hover:bg-emerald-500/20">
+              <MessageCircle className="h-7 w-7" />
+            </span>
+            <span className="text-base font-semibold text-neutral-100">
+              WhatsApp
+            </span>
+            <span className="text-sm text-neutral-500">Respuesta rápida</span>
+          </motion.a>
+
+          <motion.a
+            variants={item}
+            href={MAIL_HREF}
+            className={cardClass}
+          >
+            <span className="flex h-14 w-14 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 transition-colors duration-300 group-hover:bg-emerald-500/20">
+              <Mail className="h-7 w-7" />
+            </span>
+            <span className="text-base font-semibold text-neutral-100">
+              Email
+            </span>
+            <span className="max-w-full truncate text-sm text-neutral-500">
+              {CONTACT_EMAIL}
+            </span>
+          </motion.a>
+
+          <motion.button
+            variants={item}
+            type="button"
+            onClick={handleCopyEmail}
+            className={cardClass}
+          >
+            <span className="flex h-14 w-14 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 transition-colors duration-300 group-hover:bg-emerald-500/20">
+              {copied ? (
+                <Check className="h-7 w-7" />
+              ) : (
+                <Copy className="h-7 w-7" />
+              )}
+            </span>
+            <span className="text-base font-semibold text-neutral-100">
+              {copied ? "¡Copiado!" : "Copiar correo"}
+            </span>
+            <span className="text-sm text-neutral-500">Al portapapeles</span>
+          </motion.button>
+        </motion.div>
       </div>
     </section>
   );

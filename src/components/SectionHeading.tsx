@@ -18,7 +18,7 @@ export default function SectionHeading({
       <motion.p
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.5, ease: "easeOut" }}
         className="text-sm text-neutral-500"
       >
@@ -29,7 +29,7 @@ export default function SectionHeading({
       <motion.h2
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.5, ease: "easeOut", delay: 0.1 }}
         className="mt-2 font-mono text-3xl font-bold tracking-tight text-neutral-200 sm:text-4xl"
       >
@@ -39,7 +39,7 @@ export default function SectionHeading({
       <motion.div
         initial={{ scaleX: 0 }}
         whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, amount: 0.3 }}
+        viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.7, ease: "easeOut", delay: 0.2 }}
         className="mt-6 origin-left border-b border-neutral-800/50"
       />

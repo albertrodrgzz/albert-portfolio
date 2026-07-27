@@ -1,7 +1,8 @@
 "use client";
 
-import { useRef, type MouseEvent } from "react";
+import { useRef, useState, type MouseEvent } from "react";
 import Link from "next/link";
+import { Menu, X } from "lucide-react";
 
 const links = [
   { label: "~/sobre-mi", href: "#sobre-mi" },
@@ -12,9 +13,11 @@ const links = [
 
 export default function Navbar() {
   const headerRef = useRef<HTMLElement>(null);
+  const [isOpen, setIsOpen] = useState(false);
 
   function handleNavClick(event: MouseEvent<HTMLAnchorElement>, href: string) {
     const element = document.getElementById(href.slice(1));
+    setIsOpen(false);
     if (!element) return;
 
     event.preventDefault();
@@ -33,7 +36,7 @@ export default function Navbar() {
           <span className="text-neutral-600">$</span>
         </Link>
 
-        <ul className="flex items-center gap-6">
+        <ul className="hidden items-center gap-6 md:flex">
           {links.map((link) => (
             <li key={link.href}>
               <Link
@@ -46,7 +49,37 @@ export default function Navbar() {
             </li>
           ))}
         </ul>
+
+        <button
+          type="button"
+          onClick={() => setIsOpen((prev) => !prev)}
+          aria-expanded={isOpen}
+          aria-controls="mobile-menu"
+          aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
+          className="flex h-9 w-9 items-center justify-center rounded border border-neutral-800 text-neutral-300 transition-colors hover:border-emerald-500/50 hover:text-emerald-400 md:hidden"
+        >
+          {isOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        </button>
       </nav>
+
+      {isOpen && (
+        <ul
+          id="mobile-menu"
+          className="flex flex-col gap-1 border-t border-neutral-800 bg-neutral-950/95 px-6 py-4 text-sm md:hidden"
+        >
+          {links.map((link) => (
+            <li key={link.href}>
+              <Link
+                href={link.href}
+                onClick={(event) => handleNavClick(event, link.href)}
+                className="block rounded px-2 py-2.5 text-neutral-400 transition-colors hover:bg-neutral-900 hover:text-emerald-400"
+              >
+                {link.label}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
     </header>
   );
 }

@@ -39,7 +39,7 @@ export default function HeroSection() {
   const typedSkill = useTypingEffect(skillPhrases);
 
   return (
-    <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-6 py-24 sm:px-12">
+    <section className="relative flex min-h-screen w-full items-center justify-center overflow-hidden px-4 py-16 sm:px-8 sm:py-20 md:px-12 md:py-24">
       <div className="mx-auto flex w-full max-w-6xl flex-col items-center gap-16 lg:flex-row lg:items-center lg:justify-between lg:gap-12">
         <motion.div
           variants={container}
@@ -59,7 +59,7 @@ export default function HeroSection() {
             </span>
           </motion.div>
 
-          <div className="flex flex-col gap-4 px-6 py-10 sm:px-10">
+          <div className="flex flex-col gap-4 px-4 py-8 sm:px-10 sm:py-10">
             <motion.p variants={item} className="text-sm text-neutral-500">
               <span className="text-emerald-400">visitor@portfolio</span>
               <span className="text-neutral-600">:~$</span> whoami
@@ -67,7 +67,7 @@ export default function HeroSection() {
 
             <motion.h1
               variants={item}
-              className="text-4xl font-bold tracking-tight text-neutral-100 sm:text-5xl"
+              className="text-3xl font-bold tracking-tight text-neutral-100 md:text-5xl lg:text-7xl"
             >
               Albert
             </motion.h1>
