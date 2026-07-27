@@ -8,8 +8,7 @@
 
 > Portafolio web interactivo de alto rendimiento, diseñado con una estética de terminal avanzada e interfaces tipo "Glassmorphism". Construido para demostrar dominio en el desarrollo frontend moderno y arquitectura escalable.
 
-🔗 **[Visitar Portafolio en Vivo](https://albert-portfolio-chi.vercel.app)** *(Reemplaza este enlace con tu URL final de Vercel)*
-
+🔗 **[Visitar Portafolio en Vivo](https://albert-portfolio-chi.vercel.app)**
 ---
 
 ## ⚡ Características Principales
