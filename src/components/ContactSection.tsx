@@ -5,17 +5,10 @@ import { Check, Copy, Mail, MessageCircle } from "lucide-react";
 import { motion, type Variants } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
 
-const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "";
-const CONTACT_EMAIL = process.env.NEXT_PUBLIC_CONTACT_EMAIL ?? "";
-
-const WHATSAPP_MESSAGE =
-  "Hola Albert, vi tu portafolio y me gustaría contactarte.";
-const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(
-  WHATSAPP_MESSAGE
-)}`;
-const MAIL_HREF = `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(
-  "Contacto desde el portafolio"
-)}`;
+const WHATSAPP_HREF =
+  "https://api.whatsapp.com/send?phone=584249399005&text=Hola%20Albert,%20vi%20tu%20portafolio%20y%20me%20gustar%C3%ADa%20hablar%20contigo.";
+const MAIL_HREF = "mailto:contacto.albertr@gmail.com";
+const CONTACT_EMAIL = "contacto.albertr@gmail.com";
 
 const cardClass =
   "group relative flex flex-col items-center gap-3 overflow-hidden rounded-lg border border-neutral-800 bg-white/5 p-8 text-center backdrop-blur-xl transition-all duration-300 hover:border-emerald-500/50 hover:bg-white/[0.08] hover:shadow-[0_0_20px_rgba(16,185,129,0.15)]";
@@ -80,6 +73,8 @@ export default function ContactSection() {
           <motion.a
             variants={item}
             href={MAIL_HREF}
+            target="_blank"
+            rel="noopener noreferrer"
             className={cardClass}
           >
             <span className="flex h-14 w-14 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 transition-colors duration-300 group-hover:bg-emerald-500/20">
