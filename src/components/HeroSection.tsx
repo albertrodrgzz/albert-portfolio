@@ -1,9 +1,12 @@
 "use client";
 
 import { ArrowUpRight } from "lucide-react";
+import { GithubIcon } from "@/components/icons/SocialIcons";
 import { motion, type Variants } from "framer-motion";
 import MagneticButton from "@/components/MagneticButton";
 import { useTypingEffect } from "@/hooks/useTypingEffect";
+
+const GITHUB_URL = "https://github.com/albertrodrgzz";
 
 const skillPhrases = [
   "Especialista en desarrollo web...",
@@ -54,27 +57,27 @@ export default function HeroSection() {
             <span className="h-3 w-3 rounded-full bg-red-500/70" />
             <span className="h-3 w-3 rounded-full bg-yellow-500/70" />
             <span className="h-3 w-3 rounded-full bg-emerald-500/70" />
-            <span className="ml-3 text-xs text-neutral-500">
+            <span className="ml-3 font-mono text-xs text-neutral-400">
               albert@portfolio — zsh
             </span>
           </motion.div>
 
           <div className="flex flex-col gap-4 px-4 py-8 sm:px-10 sm:py-10">
-            <motion.p variants={item} className="text-sm text-neutral-500">
+            <motion.p variants={item} className="font-mono text-sm text-neutral-300">
               <span className="text-emerald-400">visitor@portfolio</span>
-              <span className="text-neutral-600">:~$</span> whoami
+              <span className="text-neutral-400">:~$</span> whoami
             </motion.p>
 
             <motion.h1
               variants={item}
-              className="text-3xl font-bold tracking-tight text-neutral-100 md:text-5xl lg:text-7xl"
+              className="font-mono text-3xl font-bold tracking-tight text-neutral-100 md:text-5xl lg:text-7xl"
             >
               Albert
             </motion.h1>
 
             <motion.p
               variants={item}
-              className="min-h-7 text-lg text-neutral-300 sm:text-xl"
+              className="min-h-7 font-mono text-lg text-neutral-200 sm:text-xl"
             >
               <span className="text-emerald-400">&gt;</span> {typedSkill}
               <span
@@ -85,20 +88,20 @@ export default function HeroSection() {
 
             <motion.p
               variants={item}
-              className="max-w-xl text-base text-neutral-400 sm:text-lg"
+              className="max-w-xl text-base leading-relaxed text-neutral-300 sm:text-lg"
             >
               Enfocado en{" "}
-              <span className="text-emerald-400">
+              <span className="font-medium text-emerald-400">
                 arquitectura de bases de datos
               </span>{" "}
               y{" "}
-              <span className="text-emerald-400">
+              <span className="font-medium text-emerald-400">
                 desarrollo de aplicaciones
               </span>
               .
             </motion.p>
 
-            <motion.div variants={item} className="mt-2 flex flex-wrap gap-4">
+            <motion.div variants={item} className="mt-2 flex flex-wrap items-center gap-3 sm:gap-4">
               <MagneticButton href="#proyectos" variant="primary">
                 ./ver-proyectos
                 <ArrowUpRight className="h-4 w-4" />
@@ -107,6 +110,19 @@ export default function HeroSection() {
               <MagneticButton href="#contacto" variant="secondary">
                 ./contacto
               </MagneticButton>
+
+              <div className="flex items-center gap-2 pl-0 sm:pl-1">
+                <a
+                  href={GITHUB_URL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="GitHub de Albert Rodríguez"
+                  className="group flex h-[42px] items-center gap-2 rounded-md border border-neutral-800 bg-neutral-900/80 px-3.5 text-xs font-semibold text-neutral-300 transition-all hover:border-emerald-500/50 hover:bg-neutral-800 hover:text-emerald-400"
+                >
+                  <GithubIcon className="h-4 w-4 text-emerald-400 transition-transform group-hover:scale-110" />
+                  <span>GitHub</span>
+                </a>
+              </div>
             </motion.div>
           </div>
         </motion.div>
@@ -126,7 +142,7 @@ export default function HeroSection() {
             style={{ transform: "rotateY(12deg)" }}
             className="w-72 rounded-lg border border-neutral-800 bg-neutral-900/60 p-6 opacity-60 shadow-2xl blur-[1px]"
           >
-            <pre className="text-xs leading-relaxed text-neutral-500">
+            <pre className="font-mono text-xs leading-relaxed text-neutral-300">
               <code>{codeSnippet}</code>
             </pre>
           </div>

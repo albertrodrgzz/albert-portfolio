@@ -11,7 +11,8 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-mono: var(--font-jetbrains-mono);
+  --font-sans: var(--font-inter), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --animate-blink: blink 1s step-end infinite;
   --animate-pulse-glow: pulse-glow 2.5s ease-in-out infinite;
   --animate-spin-slow: spin-slow 160s linear infinite;
@@ -84,4 +85,27 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+
+  .animate-spin-slow,
+  .animate-drift,
+  .animate-border-spin,
+  .animate-blink,
+  .animate-pulse-glow,
+  .animate-led-blink {
+    animation: none !important;
+  }
 }

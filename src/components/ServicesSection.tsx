@@ -53,7 +53,7 @@ export default function ServicesSection() {
                 {title}
               </h3>
 
-              <p className="text-sm leading-relaxed text-neutral-400">
+              <p className="font-sans text-sm leading-relaxed text-neutral-300">
                 {description}
               </p>
 

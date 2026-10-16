@@ -20,10 +20,10 @@ export default function SectionHeading({
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-50px" }}
         transition={{ duration: 0.5, ease: "easeOut" }}
-        className="text-sm text-neutral-500"
+        className="font-mono text-sm text-neutral-300"
       >
         <span className="text-emerald-400">~/albert/portfolio</span>
-        <span className="text-neutral-600">$</span> {command}
+        <span className="text-neutral-400">$</span> {command}
       </motion.p>
 
       <motion.h2

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, type MouseEvent, type ReactNode } from "react";
+import { useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 
@@ -27,12 +27,28 @@ export default function MagneticButton({
   onClick,
 }: MagneticButtonProps) {
   const ref = useRef<HTMLDivElement>(null);
+  const [canHover, setCanHover] = useState(false);
+
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 150, damping: 15, mass: 0.2 });
   const springY = useSpring(y, { stiffness: 150, damping: 15, mass: 0.2 });
 
+  useEffect(() => {
+    // Detecta si el dispositivo soporta puntero fino y eventos hover reales
+    const mediaQuery = window.matchMedia("(hover: hover) and (pointer: fine)");
+    setCanHover(mediaQuery.matches);
+
+    function handleMediaChange(event: MediaQueryListEvent) {
+      setCanHover(event.matches);
+    }
+
+    mediaQuery.addEventListener("change", handleMediaChange);
+    return () => mediaQuery.removeEventListener("change", handleMediaChange);
+  }, []);
+
   function handleMouseMove(event: MouseEvent<HTMLDivElement>) {
+    if (!canHover) return;
     const rect = ref.current?.getBoundingClientRect();
     if (!rect) return;
     x.set((event.clientX - rect.left - rect.width / 2) * 0.35);
@@ -40,6 +56,7 @@ export default function MagneticButton({
   }
 
   function handleMouseLeave() {
+    if (!canHover) return;
     x.set(0);
     y.set(0);
   }
@@ -49,7 +66,7 @@ export default function MagneticButton({
       ref={ref}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      style={{ x: springX, y: springY }}
+      style={canHover ? { x: springX, y: springY } : undefined}
       className="group relative inline-block shrink-0 overflow-hidden rounded-md p-px"
     >
       <span
@@ -61,7 +78,7 @@ export default function MagneticButton({
         onClick={onClick}
         target={target}
         rel={target === "_blank" ? "noopener noreferrer" : undefined}
-        className={`relative inline-flex items-center gap-1.5 overflow-hidden rounded-[5px] border border-neutral-800 bg-neutral-950 px-5 py-2.5 text-sm font-semibold transition-colors duration-300 ${variantClasses[variant]} ${className}`}
+        className={`relative inline-flex items-center gap-1.5 overflow-hidden rounded-[5px] border border-neutral-800 bg-neutral-950 px-5 py-2.5 font-mono text-sm font-semibold transition-colors duration-300 ${variantClasses[variant]} ${className}`}
       >
         <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/20 to-transparent transition-transform duration-700 ease-out group-hover:translate-x-full" />
         <span className="relative inline-flex items-center gap-1.5">

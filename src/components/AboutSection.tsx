@@ -17,7 +17,8 @@ const profile: ProfileField[] = [
     value: "Albert Nazareth Rodríguez Sifontes",
     type: "string",
   },
-  { key: "edad", value: 20, type: "number" },
+  { key: "experiencia", value: "+2 años en desarrollo de software", type: "string" },
+  { key: "especialidad", value: "Full-Stack & Arquitectura MVC", type: "string" },
   { key: "ubicacion", value: "Ciudad Bolívar, Venezuela", type: "string" },
   { key: "titulo", value: "TSU en Informática", type: "string" },
   { key: "disponible", value: true, type: "boolean" },
@@ -88,8 +89,8 @@ export default function AboutSection() {
               className="relative block rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400"
             >
               <Image
-                alt="Albert Rodríguez"
-                src="/1001612983.png"
+                alt="Albert Rodríguez - Full-Stack Developer"
+                src="/albert-rodriguez-fullstack.webp"
                 width={400}
                 height={400}
                 priority
@@ -110,60 +111,59 @@ export default function AboutSection() {
                 <span className="h-2.5 w-2.5 rounded-full bg-red-500/70" />
                 <span className="h-2.5 w-2.5 rounded-full bg-yellow-500/70" />
                 <span className="h-2.5 w-2.5 rounded-full bg-emerald-500/70" />
-                <span className="ml-2 text-xs text-neutral-500">
+                <span className="ml-2 font-mono text-xs text-neutral-400">
                   profile.json
                 </span>
               </div>
 
-              <pre className="overflow-x-auto p-6 text-sm leading-relaxed sm:text-base">
+              <pre className="font-mono overflow-x-auto p-6 text-sm leading-relaxed sm:text-base">
                 <code>
-                  <span className="text-neutral-500">{"{"}</span>
+                  <span className="text-neutral-400">{"{"}</span>
                   {profile.map((field, index) => (
                     <span key={field.key} className="block pl-4">
                       <span className="text-sky-400">
                         &quot;{field.key}&quot;
                       </span>
-                      <span className="text-neutral-500">: </span>
+                      <span className="text-neutral-400">: </span>
                       <span className={valueColor[field.type]}>
                         {formatValue(field)}
                       </span>
                       {index < profile.length - 1 && (
-                        <span className="text-neutral-500">,</span>
+                        <span className="text-neutral-400">,</span>
                       )}
                     </span>
                   ))}
-                  <span className="text-neutral-500">{"}"}</span>
+                  <span className="text-neutral-400">{"}"}</span>
                 </code>
               </pre>
             </motion.div>
 
             <motion.div
               variants={item}
-              className="mt-8 flex flex-col gap-6 text-sm leading-relaxed text-neutral-400 sm:text-base"
+              className="mt-8 flex flex-col gap-6 font-sans text-sm leading-relaxed text-neutral-300 sm:text-base"
             >
               <p>
-                <span className="block text-neutral-600">// background</span>
-                Cuento con experiencia sólida en soporte técnico institucional
-                (ISPEB) y atención al cliente (Call Center), lo que me dio una
-                comprensión profunda de cómo los usuarios reales interactúan
-                con los sistemas.
+                <span className="mb-1 block font-mono text-xs tracking-wider text-emerald-400/90">// trayectoria</span>
+                Mi trayectoria técnica combina experiencia en soporte institucional (ISPEB) y atención al cliente especializado, lo que me otorgó un entendimiento profundo sobre cómo los usuarios finales operan sistemas en entornos reales y bajo presión operativa.
               </p>
 
               <p>
-                <span className="block text-neutral-600">
-                  // presentación
+                <span className="mb-1 block font-mono text-xs tracking-wider text-emerald-400/90">
+                  // enfoque e ingeniería
                 </span>
-                A partir de esa base, he evolucionado mi perfil hacia la{" "}
-                <span className="text-emerald-400">
+                He evolucionado este perfil hacia la{" "}
+                <span className="font-medium text-emerald-400">
                   Arquitectura de Software
+                </span>
+                , el diseño de{" "}
+                <span className="font-medium text-emerald-400">
+                  Bases de Datos Relacionales (ACID)
                 </span>{" "}
                 y la{" "}
-                <span className="text-emerald-400">
-                  Automatización de Negocios
+                <span className="font-medium text-emerald-400">
+                  Automatización de Procesos de Negocio
                 </span>
-                , combinando el entendimiento del usuario final con la
-                construcción de sistemas robustos y procesos que eliminan
-                trabajo manual repetitivo.
+                , construyendo sistemas escalables como plataformas de gestión de expedientes clínicos y vigilancia epidemiológica desplegadas en la nube.
               </p>
             </motion.div>
           </div>
