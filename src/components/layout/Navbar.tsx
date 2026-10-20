@@ -17,54 +17,58 @@ const GITHUB_URL = "https://github.com/albertrodrgzz";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const toggleBtnRef = useRef<HTMLButtonElement>(null);
+  const headerRef = useRef<HTMLElement>(null);
 
   function closeMobileMenu() {
     setIsOpen(false);
   }
 
-  // Cierra el menú al hacer scroll, presionar Escape o interactuar fuera
+  function toggleMobileMenu() {
+    setIsOpen((prev) => !prev);
+  }
+
+  // Cierra el menú al hacer click/touch fuera o presionar Escape
   useEffect(() => {
     if (!isOpen) return;
 
-    const handlePointerDown = (event: MouseEvent | TouchEvent) => {
+    function handlePointerDown(event: PointerEvent) {
       const target = event.target as HTMLElement | null;
-      if (
-        menuRef.current?.contains(target) ||
-        toggleBtnRef.current?.contains(target)
-      ) {
+      if (!target) return;
+
+      // Si el evento ocurrió dentro del header (barra, botón o menú desplegable), ignorar
+      if (headerRef.current?.contains(target) || target.closest("header")) {
         return;
       }
-      setIsOpen(false);
-    };
 
-    const handleScroll = () => {
       setIsOpen(false);
-    };
+    }
 
-    const handleKeyDown = (event: KeyboardEvent) => {
+    function handleKeyDown(event: KeyboardEvent) {
       if (event.key === "Escape") {
         setIsOpen(false);
       }
-    };
+    }
 
-    document.addEventListener("mousedown", handlePointerDown);
-    document.addEventListener("touchstart", handlePointerDown, { passive: true });
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    // Pequeño retardo para evitar capturar el mismo evento que abrió el menú
+    const timer = setTimeout(() => {
+      window.addEventListener("pointerdown", handlePointerDown);
+    }, 50);
+
     window.addEventListener("keydown", handleKeyDown);
 
     return () => {
-      document.removeEventListener("mousedown", handlePointerDown);
-      document.removeEventListener("touchstart", handlePointerDown);
-      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timer);
+      window.removeEventListener("pointerdown", handlePointerDown);
       window.removeEventListener("keydown", handleKeyDown);
     };
   }, [isOpen]);
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-neutral-800 bg-neutral-950/70 backdrop-blur">
+      <header
+        ref={headerRef}
+        className="sticky top-0 z-50 border-b border-neutral-800 bg-neutral-950/70 backdrop-blur"
+      >
         <nav className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4 text-sm sm:px-12">
           <Link href="#" onClick={closeMobileMenu} className="shrink-0 font-mono">
             <span className="text-emerald-400">~/albert/portfolio</span>
@@ -101,9 +105,8 @@ export default function Navbar() {
           </div>
 
           <button
-            ref={toggleBtnRef}
             type="button"
-            onClick={() => setIsOpen((prev) => !prev)}
+            onClick={toggleMobileMenu}
             aria-expanded={isOpen}
             aria-controls="mobile-menu"
             aria-label={isOpen ? "Cerrar menú" : "Abrir menú"}
@@ -117,11 +120,10 @@ export default function Navbar() {
           {isOpen && (
             <motion.div
               id="mobile-menu"
-              ref={menuRef}
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}
               exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.25, ease: "easeInOut" }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
               className="overflow-hidden border-t border-neutral-800 bg-neutral-950/95 px-6 py-4 text-sm md:hidden"
             >
               <ul className="flex flex-col gap-1">
@@ -155,17 +157,16 @@ export default function Navbar() {
         </AnimatePresence>
       </header>
 
-      {/* Backdrop interactivo para vista móvil */}
+      {/* Backdrop interactivo para cerrar al hacer clic/tap fuera */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
+            transition={{ duration: 0.15 }}
             onClick={closeMobileMenu}
-            onTouchStart={closeMobileMenu}
-            className="fixed inset-0 z-40 bg-black/60 backdrop-blur-xs md:hidden"
+            className="fixed inset-0 top-[65px] z-40 bg-black/60 backdrop-blur-xs md:hidden cursor-pointer"
             aria-hidden="true"
           />
         )}
