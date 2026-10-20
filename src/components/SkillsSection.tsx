@@ -28,12 +28,9 @@ import {
 import { motion, type Variants } from "framer-motion";
 import SectionHeading from "@/components/SectionHeading";
 
-type SkillLevel = "PRODUCCION" | "AVANZADO" | "FAMILIARIZADO";
-
 interface Skill {
   name: string;
   icon: LucideIcon;
-  level: SkillLevel;
   highlight: string;
 }
 
@@ -44,27 +41,6 @@ interface SkillModule {
   skills: Skill[];
 }
 
-const levelConfig: Record<
-  SkillLevel,
-  { label: string; badgeClass: string; dotClass: string }
-> = {
-  PRODUCCION: {
-    label: "Producción Diaria",
-    badgeClass: "border-emerald-500/30 bg-emerald-500/10 text-emerald-400",
-    dotClass: "bg-emerald-400 animate-pulse",
-  },
-  AVANZADO: {
-    label: "Avanzado",
-    badgeClass: "border-sky-500/30 bg-sky-500/10 text-sky-400",
-    dotClass: "bg-sky-400",
-  },
-  FAMILIARIZADO: {
-    label: "Familiarizado",
-    badgeClass: "border-neutral-700 bg-neutral-900/60 text-neutral-300",
-    dotClass: "bg-neutral-400",
-  },
-};
-
 const modules: SkillModule[] = [
   {
     category: "Frontend & Interfaces Modernas",
@@ -74,31 +50,26 @@ const modules: SkillModule[] = [
       {
         name: "Next.js (App Router)",
         icon: AppWindow,
-        level: "PRODUCCION",
         highlight: "Server & Client Components • SSR / SSG • Turbopack",
       },
       {
         name: "TypeScript",
         icon: FileCode2,
-        level: "PRODUCCION",
         highlight: "Tipado estricto • Generics • DTOs y validación de tipos",
       },
       {
         name: "React 19",
         icon: Component,
-        level: "AVANZADO",
         highlight: "Hooks avanzados • Custom Hooks desacoplados • Context API",
       },
       {
         name: "Tailwind CSS v4",
         icon: Paintbrush,
-        level: "PRODUCCION",
         highlight: "Design systems modulares • Dark mode estricto • UI responsiva",
       },
       {
         name: "Framer Motion",
         icon: Sparkles,
-        level: "AVANZADO",
         highlight: "Micro-interacciones • Animaciones declarativas de alto impacto",
       },
     ],
@@ -111,31 +82,26 @@ const modules: SkillModule[] = [
       {
         name: "PHP 8+ (Arquitectura MVC)",
         icon: Server,
-        level: "PRODUCCION",
         highlight: "POO pura sin dependencias mágicas • Router custom • PDO seguro",
       },
       {
         name: "MySQL / MariaDB (ACID)",
         icon: Database,
-        level: "PRODUCCION",
         highlight: "Normalización 3NF • Claves foráneas • Índices compuestos y optimización",
       },
       {
         name: "PostgreSQL",
         icon: Table2,
-        level: "AVANZADO",
         highlight: "Modelado relacional • Integración con Supabase • Consultas complejas",
       },
       {
         name: "Arquitectura RESTful & APIs",
         icon: Network,
-        level: "PRODUCCION",
         highlight: "Diseño de endpoints • Middlewares • Respuestas JSON estandarizadas",
       },
       {
         name: "Node.js",
         icon: Cpu,
-        level: "AVANZADO",
         highlight: "Servicios asíncronos • Scripts de soporte • Tooling moderno",
       },
     ],
@@ -148,31 +114,26 @@ const modules: SkillModule[] = [
       {
         name: "Docker & Multi-Stage Builds",
         icon: Boxes,
-        level: "PRODUCCION",
         highlight: "Imágenes de producción ligeras • Docker Compose • Contenerización PHP/Nginx",
       },
       {
         name: "Render & Vercel (CI/CD)",
         icon: Cloud,
-        level: "PRODUCCION",
         highlight: "Pipelines de despliegue continuo • Webhooks • Entornos cloud en producción",
       },
       {
         name: "Aiven.io (Managed Cloud DB)",
         icon: Database,
-        level: "PRODUCCION",
         highlight: "Clústeres MySQL administrados • Conexiones TLS/SSL cifradas de alta seguridad",
       },
       {
         name: "Git & GitHub Workflows",
         icon: GitBranch,
-        level: "PRODUCCION",
         highlight: "Estrategias de ramificación • Commits semánticos • GitHub Actions",
       },
       {
         name: "Gestión Segura de Entornos",
         icon: SlidersHorizontal,
-        level: "PRODUCCION",
         highlight: "Aislamiento estricto de secretos (.env) • Separación staging y producción",
       },
     ],
@@ -185,31 +146,26 @@ const modules: SkillModule[] = [
       {
         name: "Desarrollo Asistido por IA (AI-Pair)",
         icon: Bot,
-        level: "PRODUCCION",
         highlight: "Multiplicador 5x en refactorización, debugging, scaffolding y code reviews",
       },
       {
         name: "Ingeniería de Prompts Técnica",
         icon: TerminalSquare,
-        level: "PRODUCCION",
         highlight: "Diseño de prompts estructurados, chain-of-thought y especificaciones precisas para LLMs",
       },
       {
         name: "Automatización de Negocios & ETLs",
         icon: Workflow,
-        level: "PRODUCCION",
         highlight: "Jobs programados (Cron), pipelines de datos y eliminación de tareas manuales",
       },
       {
         name: "Seguridad Sanitaria & Aplicada",
         icon: ShieldCheck,
-        level: "AVANZADO",
         highlight: "Defensa anti-XSS/CSRF • Hashing criptográfico Argon2id • Roles clínicos RBAC",
       },
       {
         name: "Optimización de Flujos de Trabajo",
         icon: Wand2,
-        level: "PRODUCCION",
         highlight: "Aceleración del ciclo de vida del software mediante tooling asistido por IA",
       },
     ],
@@ -275,13 +231,12 @@ export default function SkillsSection() {
                 <div className="flex flex-col gap-3 p-4 sm:p-5">
                   {mod.skills.map((skill) => {
                     const SkillIcon = skill.icon;
-                    const config = levelConfig[skill.level];
 
                     return (
                       <div
                         key={skill.name}
                         onMouseMove={handleSkillMouseMove}
-                        className="group relative flex flex-col gap-1.5 overflow-hidden rounded-lg border border-neutral-800/80 bg-neutral-950/60 p-3 backdrop-blur-xl transition-all duration-300 hover:border-emerald-500/40 hover:bg-neutral-900/60"
+                        className="group relative flex items-center gap-3.5 overflow-hidden rounded-lg border border-neutral-800/80 bg-neutral-950/60 p-3 sm:p-3.5 backdrop-blur-xl transition-all duration-300 hover:border-emerald-500/50 hover:bg-neutral-900/80 hover:shadow-[0_0_20px_rgba(16,185,129,0.08)]"
                       >
                         <span
                           aria-hidden="true"
@@ -292,25 +247,20 @@ export default function SkillsSection() {
                           }}
                         />
 
-                        <div className="relative flex flex-wrap items-center justify-between gap-2">
-                          <div className="flex items-center gap-2.5">
-                            <span className="flex h-7 w-7 items-center justify-center rounded border border-neutral-800 bg-neutral-900 text-emerald-400">
-                              <SkillIcon className="h-4 w-4" />
-                            </span>
-                            <span className="font-mono text-sm font-medium text-neutral-100">
-                              {skill.name}
-                            </span>
-                          </div>
-
-                          <div className={`inline-flex items-center gap-1.5 rounded-full border px-2.5 py-0.5 font-mono text-[11px] font-semibold ${config.badgeClass}`}>
-                            <span className={`h-1.5 w-1.5 rounded-full ${config.dotClass}`} />
-                            {config.label}
-                          </div>
+                        {/* Logo destacado */}
+                        <div className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-950/30 text-emerald-400 shadow-[0_0_12px_rgba(16,185,129,0.15)] ring-1 ring-emerald-500/10 transition-all duration-300 group-hover:scale-105 group-hover:border-emerald-400/60 group-hover:bg-emerald-500/20 group-hover:text-emerald-300 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.35)]">
+                          <SkillIcon className="h-5 w-5 transition-transform duration-300 group-hover:scale-110" />
                         </div>
 
-                        <p className="relative pl-9 font-sans text-xs leading-relaxed text-neutral-300">
-                          {skill.highlight}
-                        </p>
+                        {/* Nombre y detalles técnicos */}
+                        <div className="relative flex min-w-0 flex-1 flex-col">
+                          <span className="font-mono text-sm font-semibold text-neutral-100 transition-colors group-hover:text-emerald-300">
+                            {skill.name}
+                          </span>
+                          <p className="mt-0.5 font-sans text-xs leading-relaxed text-neutral-400 transition-colors group-hover:text-neutral-300">
+                            {skill.highlight}
+                          </p>
+                        </div>
                       </div>
                     );
                   })}
